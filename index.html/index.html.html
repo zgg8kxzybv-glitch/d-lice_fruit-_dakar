@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Délice Fruité - Salades de fruits et autres</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light-mode {
+      background: linear-gradient(135deg, #fef9f0 0%, #fff5eb 100%);
+      color: #2c2418;
+    }
+
+    body.dark-mode {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #eee;
+    }
+
+    body.dark-mode .card,
+    body.dark-mode .order-form-section,
+    body.dark-mode .admin-panel,
+    body.dark-mode .reviews-section,
+    body.dark-mode .tracking-section,
+    body.dark-mode .contact-section,
+    body.dark-mode .payment-modal {
+      background: #2d2d44;
+      color: #eee;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .header {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    }
+
+    body.dark-mode .header {
+      background: rgba(26,26,46,0.95);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #f5a65b, #e6492d);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    body.light-mode .nav-links a {
+      color: #4a3727;
+    }
+
+    body.dark-mode .nav-links a {
+      color: #ddd;
+    }
+
+    .theme-toggle, .lang-btn {
+      background: #e6492d;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .lang-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lang-btn {
+      background: #f5a65b;
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 60px 0;
+      align-items: center;
+    }
+
+    .hero-logo {
+      flex: 1;
+      text-align: center;
+    }
+
+    .hero-logo img {
+      max-width: 100%;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(45deg, #f09433, #d62976);
+      padding: 14px 28px;
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      margin-top: 20px;
+    }
+
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      padding: 12px 24px;
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .product-card {
+      border-radius: 24px;
+      padding: 24px;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    body.light-mode .product-card {
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    body.dark-mode .product-card {
+      background: #2d2d44;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .add-to-cart {
+      background: #e6492d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      width: 100%;
+      margin-top: 16px;
+      cursor: pointer;
+    }
+
+    .cart-sidebar {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      width: 400px;
+      height: 100vh;
+      background: white;
+      z-index: 2000;
+      transition: 0.3s;
+      padding: 24px;
+      overflow-y: auto;
+      box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+    }
+
+    body.dark-mode .cart-sidebar {
+      background: #1a1a2e;
+    }
+
+    .cart-sidebar.open {
+      right: 0;
+    }
+
+    .cart-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+      display: none;
+    }
+
+    .cart-overlay.open {
+      display: block;
+    }
+
+    .order-form-section, .admin-panel, .reviews-section, .tracking-section, .contact-section {
+      border-radius: 32px;
+      padding: 40px;
+      margin: 40px 0;
+    }
+
+    body.light-mode .order-form-section,
+    body.light-mode .admin-panel,
+    body.light-mode .reviews-section,
+    body.light-mode .tracking-section,
+    body.light-mode .contact-section {
+      background: white;
+    }
+
+    body.dark-mode .order-form-section,
+    body.dark-mode .admin-panel,
+    body.dark-mode .reviews-section,
+    body.dark-mode .tracking-section,
+    body.dark-mode .contact-section {
+      background: #2d2d44;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ffe1cf;
+      border-radius: 12px;
+      font-family: inherit;
+    }
+
+    body.dark-mode input,
+    body.dark-mode select,
+    body.dark-mode textarea {
+      background: #1a1a2e;
+      color: #eee;
+      border-color: #4a4a6a;
+    }
+
+    .btn-primary {
+      background: #e6492d;
+      color: white;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+    }
+
+    /* Modal Paiement */
+    .payment-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 40px;
+      border-radius: 32px;
+      z-index: 3000;
+      width: 90%;
+      max-width: 500px;
+      display: none;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .payment-modal.open {
+      display: block;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .payment-method {
+      flex: 1;
+      padding: 20px;
+      border: 2px solid #ddd;
+      border-radius: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      min-width: 120px;
+    }
+
+    .payment-method.selected {
+      border-color: #e6492d;
+      background: #fff0eb;
+    }
+
+    body.dark-mode .payment-method.selected {
+      background: #3a3a5a;
+    }
+
+    .qr-code {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .qr-code canvas {
+      border: 2px solid #ddd;
+      border-radius: 16px;
+      padding: 10px;
+      background: white;
+    }
+
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: #e6492d;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #28a745;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      z-index: 3000;
+      animation: slideIn 0.3s;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .review {
+      padding: 16px;
+      margin: 12px 0;
+      border-radius: 16px;
+    }
+
+    body.light-mode .review {
+      background: #f9f9f9;
+    }
+
+    body.dark-mode .review {
+      background: #1a1a2e;
+    }
+
+    .stars {
+      color: #ffc107;
+    }
+
+    .address-card {
+      background: #fef3e8;
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 20px;
+    }
+
+    body.dark-mode .address-card {
+      background: #1a1a2e;
+    }
+
+    @media (max-width: 768px) {
+      .cart-sidebar {
+        width: 100%;
+        right: -100%;
+      }
+      .navbar {
+        flex-direction: column;
+      }
+      .hero {
+        flex-direction: column;
+      }
+      .payment-methods {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body class="light-mode">
+
+<div class="header">
+  <div class="container">
+    <div class="navbar">
+      <div class="logo">
+        <h1>🍍 Délice Fruité</h1>
+        <p class="translate" data-key="subtitle">Salades de fruits et autres - Dakar</p>
+      </div>
+      <ul class="nav-links">
+        <li><a onclick="showSection('home')" class="translate" data-key="nav_home">Accueil</a></li>
+        <li><a onclick="showSection('products')" class="translate" data-key="nav_products">Nos produits</a></li>
+        <li><a onclick="showSection('commander')" class="translate" data-key="nav_order">Commander</a></li>
+        <li><a onclick="showSection('reviews')" class="translate" data-key="nav_reviews">Avis</a></li>
+        <li><a onclick="showSection('contact')" class="translate" data-key="nav_contact">Contact</a></li>
+        <li><a onclick="showSection('admin')">Admin</a></li>
+        <li><a onclick="toggleTheme()" class="theme-toggle"><i class="fas fa-moon"></i></a></li>
+        <li class="lang-selector">
+          <button class="lang-btn" onclick="setLanguage('fr')">🇫🇷</button>
+          <button class="lang-btn" onclick="setLanguage('en')">🇬🇧</button>
+          <button class="lang-btn" onclick="setLanguage('wo')">🇸🇳</button>
+        </li>
+        <li class="cart-icon" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Accueil -->
+  <div id="homeSection" class="hero">
+    <div class="hero-content" style="flex:1">
+      <div style="background: #ffe1cf; display: inline-block; padding: 8px 16px; border-radius: 50px;" class="translate" data-key="badge">✨ NOUVEAU - GRAND LANCEMENT ✨</div>
+      <h2 style="font-size: 3rem; margin: 20px 0;"><span class="translate" data-key="hero_title">Des salades de fruits et autres</span> <span style="color:#e6492d;" class="translate" data-key="hero_title2">100% artisanales</span></h2>
+      <p style="font-size: 1.1rem;" class="translate" data-key="hero_desc">Découvrez nos créations fraîches préparées avec amour. Livraison Yango disponible partout à Dakar.</p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px;">
+        <a href="https://www.instagram.com/delicefruite_221" target="_blank" class="instagram-link">
+          <i class="fab fa-instagram"></i> @delicefruite_221
+        </a>
+        <a href="https://wa.me/221710325628" target="_blank" class="whatsapp-link">
+          <i class="fab fa-whatsapp"></i> +221 71 032 56 28
+        </a>
+      </div>
+      <div style="margin-top: 30px; display: flex; gap: 20px; flex-wrap: wrap;">
+        <div><i class="fas fa-motorcycle"></i> <span class="translate" data-key="delivery_yango">Livraison Yango</span></div>
+        <div><i class="fas fa-leaf"></i> <span class="translate" data-key="fresh_fruits">Fruits frais</span></div>
+        <div><i class="fas fa-credit-card"></i> <span>Orange Money / Wave</span></div>
+      </div>
+    </div>
+    <div class="hero-logo">
+      <img src="C:\Users\hp x360\Pictures\WhatsApp Image 2026-04-20 at 21.17.49.jpeg">
+      <p style="text-align: center; margin-top: 10px; font-size: 10px; color: #999;" class="translate" data-key="logo_note"></p>
+    </div>
+  </div>
+
+  <!-- Produits -->
+  <div id="productsSection" style="display: none;">
+    <h2 style="text-align: center; font-size: 2.5rem; margin: 40px 0;" class="translate" data-key="products_title">🍇 Nos créations artisanales 🥝</h2>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+
+  <!-- Commande -->
+  <div id="commanderSection" class="order-form-section" style="display: none;">
+    <h2 class="translate" data-key="order_title">📝 Personnalisez votre commande</h2>
+    <form id="orderForm">
+      <div class="form-group">
+        <label class="translate" data-key="label_name">Nom complet *</label>
+        <input type="text" id="fullName" required>
+      </div>
+      <div class="form-group">
+        <label class="translate" data-key="label_phone">Téléphone (WhatsApp) *</label>
+        <input type="tel" id="phone" required placeholder="77 XXX XX XX">
+      </div>
+      <div class="form-group">
+        <label class="translate" data-key="label_size">Taille</label>
+        <select id="size">
+          <option value="Petit" data-key="size_small">Petit (250g) - 1000F</option>
+          <option value="Grand" selected data-key="size_large">Grand (750g) - 1500F</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="translate" data-key="label_delivery">Mode de livraison</label>
+        <select id="deliveryMode">
+          <option value="yango" data-key="delivery_yango_option">🚚 Livraison Yango (frais selon distance, gratuit au campus)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="translate" data-key="label_address">Adresse de livraison *</label>
+        <textarea id="address" rows="2" required placeholder="Quartier, rue, point de repère..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary"><i class="fas fa-credit-card"></i> <span class="translate" data-key="btn_payment">Payer par Orange Money ou Wave</span></button>
+    </form>
+    <div id="orderMessage" style="margin-top: 20px; display: none;"></div>
+  </div>
+
+  <!-- Avis -->
+  <div id="reviewsSection" class="reviews-section" style="display: none;">
+    <h2 class="translate" data-key="reviews_title">⭐ Avis de nos clients</h2>
+    <div id="reviewsList"></div>
+    <h3 class="translate" data-key="give_review">Donnez votre avis</h3>
+    <form id="reviewForm">
+      <div class="form-group">
+        <label class="translate" data-key="rating_label">Note</label>
+        <select id="rating">
+          <option value="5">⭐⭐⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="1">⭐</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="translate" data-key="comment_label">Commentaire</label>
+        <textarea id="reviewText" rows="3" placeholder="Votre avis..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="translate" data-key="name_label">Nom</label>
+        <input type="text" id="reviewerName" placeholder="Votre nom">
+      </div>
+      <button type="submit" class="btn-primary">Publier l'avis</button>
+    </form>
+  </div>
+
+  <!-- Contact -->
+  <div id="contactSection" class="contact-section" style="display: none;">
+    <h2 class="translate" data-key="contact_title">📍 Nous contacter</h2>
+    <div class="address-card">
+      <p><i class="fas fa-map-pin"></i> <strong class="translate" data-key="address_label">Adresse :</strong> Liberté 6, Khar Yalla, Dakar, Sénégal</p>
+      <p><i class="fab fa-whatsapp"></i> <strong>WhatsApp :</strong> <a href="https://wa.me/221710325628">+221 71 032 56 28</a> / <a href="https://wa.me/221779404444">+221 77 940 44 44</a></p>
+      <p><i class="fab fa-instagram"></i> <strong>Instagram :</strong> <a href="https://www.instagram.com/delicefruite_221">@delicefruite_221</a></p>
+      <p><i class="fas fa-credit-card"></i> <strong>Paiement :</strong> Orange Money / Wave</p>
+      <p><i class="fas fa-truck"></i> <strong class="translate" data-key="delivery_note">Livraison :</strong> Disponible partout via Yango</p>
+    </div>
+  </div>
+
+  <!-- Admin -->
+  <div id="adminSection" class="admin-panel" style="display: none;">
+    <h2>📊 Panneau Admin</h2>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+      <button onclick="exportOrdersCSV()" class="btn-primary">📥 Export CSV</button>
+      <button onclick="exportOrdersJSON()" class="btn-primary">📥 Export JSON</button>
+      <button onclick="clearAllOrders()" style="background:#dc3545; color:white; padding:10px 20px; border:none; border-radius:8px;">🗑️ Effacer tout</button>
+    </div>
+    <div>
+      <h3>Statistiques</h3>
+      <p>Total commandes: <strong id="totalOrders">0</strong></p>
+      <p>Chiffre d'affaires: <strong id="totalRevenue">0</strong> FCFA</p>
+    </div>
+    <div id="ordersList" style="max-height: 500px; overflow-y: auto;"></div>
+  </div>
+</div>
+
+<!-- Panier -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <h2>🛒 Mon panier</h2>
+  <div id="cartItems"></div>
+  <div style="margin-top: 20px;">
+    <p><strong>Total: <span id="cartTotal">0</span> FCFA</strong></p>
+    <button class="btn-primary" onclick="checkout()">Valider la commande</button>
+  </div>
+</div>
+
+<!-- MODAL PAIEMENT ORANGE MONEY / WAVE -->
+<div id="paymentModal" class="payment-modal">
+  <h2>💳 Paiement sécurisé</h2>
+  <p>Montant à payer: <strong id="paymentAmount">0</strong> FCFA</p>
+  
+  <div class="payment-methods">
+    <div class="payment-method" onclick="selectPaymentMethod('orange')" id="methodOrange">
+      <i class="fas fa-phone-alt" style="font-size: 32px; color: #ff6600;"></i>
+      <p><strong>Orange Money</strong></p>
+      <small>Paiement mobile</small>
+    </div>
+    <div class="payment-method" onclick="selectPaymentMethod('wave')" id="methodWave">
+      <i class="fas fa-waveform" style="font-size: 32px; color: #00b8b8;"></i>
+      <p><strong>Wave</strong></p>
+      <small>Transfert instantané</small>
+    </div>
+  </div>
+
+  <!-- Formulaire Orange Money -->
+  <div id="orangeForm" style="display: none;">
+    <div class="form-group">
+      <label>📱 Numéro Orange Money</label>
+      <input type="tel" id="orangeNumber" placeholder="77 XXX XX XX" class="payment-input">
+      <small>Entrez le numéro associé à votre compte Orange Money</small>
+    </div>
+    <div class="form-group">
+      <label>🔐 Code de confirmation</label>
+      <input type="password" id="orangePin" placeholder="1234" maxlength="4" class="payment-input">
+      <small>Saisissez votre code secret à 4 chiffres</small>
+    </div>
+  </div>
+
+  <!-- QR Code Wave -->
+  <div id="qrContainer" style="display: none;">
+    <div class="qr-code">
+      <canvas id="qrCanvas"></canvas>
+      <p>📱 Scannez ce QR code avec l'application Wave</p>
+      <p style="font-size: 12px;">Ou envoyez le montant à <strong>77 000 00 00</strong></p>
+    </div>
+    <div class="form-group">
+      <label>📱 Confirmez votre numéro Wave</label>
+      <input type="tel" id="waveNumber" placeholder="77 XXX XX XX" class="payment-input">
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 10px; margin-top: 20px;">
+    <button class="btn-primary" onclick="processPayment()">✅ Confirmer le paiement</button>
+    <button onclick="closePaymentModal()" style="background: #6c757d; color:white; padding:14px 28px; border:none; border-radius:40px; cursor:pointer;">❌ Annuler</button>
+  </div>
+</div>
+
+<script>
+  // ========== MULTI-LANGUE ==========
+  const translations = {
+    fr: {
+      subtitle: "Salades de fruits et autres - Dakar",
+      nav_home: "Accueil", nav_products: "Nos produits", nav_order: "Commander", nav_reviews: "Avis", nav_contact: "Contact",
+      badge: "✨ NOUVEAU - GRAND LANCEMENT ✨",
+      hero_title: "Des salades de fruits et autres", hero_title2: "100% artisanales",
+      hero_desc: "Découvrez nos créations fraîches préparées avec amour. Livraison Yango disponible partout à Dakar.",
+      delivery_yango: "Livraison Yango", fresh_fruits: "Fruits frais",
+      products_title: "🍇 Nos créations artisanales 🥝",
+      order_title: "📝 Personnalisez votre commande",
+      label_name: "Nom complet *", label_phone: "Téléphone (WhatsApp) *",
+      label_size: "Taille", size_small: "Petit (250g) - 1000F", size_large: "Grand (750g) - 1500F",
+      label_delivery: "Mode de livraison", delivery_yango_option: "🚚 Livraison Yango (frais selon distance, gratuit au campus)",
+      label_address: "Adresse de livraison *", btn_payment: "Payer par Orange Money ou Wave",
+      reviews_title: "⭐ Avis de nos clients", give_review: "Donnez votre avis", rating_label: "Note", comment_label: "Commentaire", name_label: "Nom", btn_submit: "Publier l'avis",
+      contact_title: "📍 Nous contacter", address_label: "Adresse :", delivery_note: "Livraison :", logo_note: "Notre logo"
+    },
+    en: {
+      subtitle: "Fruit salads and more - Dakar",
+      nav_home: "Home", nav_products: "Products", nav_order: "Order", nav_reviews: "Reviews", nav_contact: "Contact",
+      badge: "✨ NEW - GRAND LAUNCH ✨",
+      hero_title: "Fruit salads and more", hero_title2: "100% artisanal",
+      hero_desc: "Discover our fresh creations made with love. Yango delivery available everywhere in Dakar.",
+      delivery_yango: "Yango Delivery", fresh_fruits: "Fresh fruits",
+      products_title: "🍇 Our artisanal creations 🥝",
+      order_title: "📝 Customize your order",
+      label_name: "Full name *", label_phone: "Phone (WhatsApp) *",
+      label_size: "Size", size_small: "Small (250g) - 1000F", size_large: "Large (750g) - 1500F",
+      label_delivery: "Delivery method", delivery_yango_option: "🚚 Yango Delivery (fee based on distance, free on campus)",
+      label_address: "Delivery address *", btn_payment: "Pay with Orange Money or Wave",
+      reviews_title: "⭐ Customer reviews", give_review: "Leave a review", rating_label: "Rating", comment_label: "Comment", name_label: "Name", btn_submit: "Submit review",
+      contact_title: "📍 Contact us", address_label: "Address:", delivery_note: "Delivery:", logo_note: "Our logo"
+    },
+    wo: {
+      subtitle: "Salades bu fruits ak ay tay - Dakaar",
+      nav_home: "Wéer", nav_products: "Njariñ", nav_order: "Ndefar", nav_reviews: "Tànk", nav_contact: "Doole",
+      badge: "✨ BÉS DUÑU - TAXAWU GI ✨",
+      hero_title: "Salades bu fruits ak ay tay", hero_title2: "100% artisanales",
+      hero_desc: "Gis nañu sa créations fraîches. Livraison Yango am na ci Dakaar ba tuuti.",
+      delivery_yango: "Livraison Yango", fresh_fruits: "Fruits bu réy",
+      products_title: "🍇 Njariñ bu artisanale 🥝",
+      order_title: "📝 Ndefar sa commande",
+      label_name: "Turu bu nekk *", label_phone: "Téléphone (WhatsApp) *",
+      label_size: "Mag", size_small: "Biti (250g) - 1000F", size_large: "Mag (750g) - 1500F",
+      label_delivery: "Naka ngay bëgga feyyal", delivery_yango_option: "🚚 Livraison Yango (fee ci yoon, gratuit ci campus)",
+      label_address: "Adresse feyyal *", btn_payment: "Fay ak Orange Money walla Wave",
+      reviews_title: "⭐ Tànk njaboot", give_review: "Tànk", rating_label: "Not", comment_label: "Tànk", name_label: "Tur", btn_submit: "Tànk",
+      contact_title: "📍 Doole", address_label: "Adresse:", delivery_note: "Feyyal:", logo_note: "Logo"
+    }
+  };
+
+  let currentLang = 'fr';
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.translate').forEach(el => {
+      const key = el.getAttribute('data-key');
+      if (key && translations[lang][key]) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = translations[lang][key];
+        } else {
+          el.innerHTML = translations[lang][key];
+        }
+      }
+    });
+    document.querySelectorAll('option[data-key]').forEach(opt => {
+      const key = opt.getAttribute('data-key');
+      if (key && translations[lang][key]) opt.text = translations[lang][key];
+    });
+    localStorage.setItem('language', lang);
+  }
+
+  // ========== PRODUITS ==========
+  const products = [
+    { id: 1, name: "Classique", price: 1000, priceLarge: 1500, icon: "🍉", desc: "Fruits de saison frais" },
+    { id: 2, name: "Crémeux", price: 1000, priceLarge: 1500, icon: "🥥", desc: "Onctuosité exquise" },
+    { id: 3, name: "Fruité Jus", price: 1000, priceLarge: 1500, icon: "🍍", desc: "Explosion de fraîcheur" }
+  ];
+
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let orders = JSON.parse(localStorage.getItem('deliceFruiteOrders') || '[]');
+  let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+  let selectedPaymentMethod = null;
+  let pendingOrderData = null;
+
+  function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartItemsDiv = document.getElementById('cartItems');
+    if (!cartItemsDiv) return;
+    if (cart.length === 0) {
+      cartItemsDiv.innerHTML = '<p>Votre panier est vide</p>';
+      document.getElementById('cartTotal').innerText = '0';
+      return;
+    }
+    let total = 0;
+    cartItemsDiv.innerHTML = cart.map(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      return `
+        <div style="margin-bottom: 16px; padding: 12px; border-bottom: 1px solid #ddd;">
+          <strong>${item.icon} ${item.name} (${item.size || 'Grand'})</strong><br>
+          ${item.price} FCFA x ${item.quantity}
+          <button onclick="changeQuantity(${item.id}, -1)">-</button>
+          <button onclick="changeQuantity(${item.id}, 1)">+</button>
+          <button onclick="removeFromCart(${item.id})" style="color:red;">🗑️</button>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('cartTotal').innerText = total;
+  }
+
+  function addToCart(product, size = 'Grand') {
+    const price = size === 'Petit' ? 1000 : 1500;
+    const existing = cart.find(item => item.id === product.id && item.size === size);
+    if (existing) {
+      existing.quantity++;
+    } else {
+      cart.push({ ...product, price, size, quantity: 1 });
+    }
+    saveCart();
+    showToast(`✅ ${product.name} (${size}) ajouté au panier !`);
+  }
+
+  function changeQuantity(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      saveCart();
+    }
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(i => i.id !== id);
+    saveCart();
+    showToast("Produit retiré du panier");
+  }
+
+  function toggleCart() {
+    document.getElementById('cartSidebar').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('open');
+  }
+
+  function checkout() {
+    if (cart.length === 0) {
+      showToast("Votre panier est vide");
+      return;
+    }
+    toggleCart();
+    showSection('commander');
+  }
+
+  function saveOrders() {
+    localStorage.setItem('deliceFruiteOrders', JSON.stringify(orders));
+    displayOrders();
+  }
+
+  function displayOrders() {
+    const container = document.getElementById('ordersList');
+    if (!container) return;
+    if (orders.length === 0) {
+      container.innerHTML = '<p>Aucune commande</p>';
+      document.getElementById('totalOrders').innerText = '0';
+      document.getElementById('totalRevenue').innerText = '0';
+      return;
+    }
+    let totalRev = 0;
+    container.innerHTML = orders.map(order => {
+      totalRev += order.total || 0;
+      return `
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; margin: 12px 0; border-radius: 16px;">
+          <strong>#${order.id}</strong> - ${order.date}<br>
+          <strong>${order.fullName}</strong><br>
+          📦 ${order.items}<br>
+          📍 ${order.address}<br>
+          💰 ${order.total} FCFA<br>
+          💳 Paiement: ${order.paymentMethod}<br>
+          📊 Statut: <span id="status-${order.id}">${order.status || 'En attente'}</span><br>
+          <button onclick="updateOrderStatus(${order.id}, 'confirmée')" style="background:#28a745; padding:4px 8px; border:none; border-radius:4px;">✅ Confirmée</button>
+          <button onclick="updateOrderStatus(${order.id}, 'en livraison')" style="background:#ffc107; padding:4px 8px; border:none; border-radius:4px;">🚚 En livraison</button>
+          <button onclick="updateOrderStatus(${order.id}, 'livrée')" style="background:#17a2b8; padding:4px 8px; border:none; border-radius:4px;">📦 Livrée</button>
+          <button onclick="sendWhatsApp('${order.phone || ''}', '${order.fullName}', ${order.id})" style="background:#25D366; padding:6px 12px; border:none; border-radius:8px; margin-top:8px;">📱 WhatsApp</button>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('totalOrders').innerText = orders.length;
+    document.getElementById('totalRevenue').innerText = totalRev;
+  }
+
+  function updateOrderStatus(orderId, status) {
+    const order = orders.find(o => o.id === orderId);
+    if (order) {
+      order.status = status;
+      saveOrders();
+      showToast(`Commande #${orderId} ${status}`);
+      const statusSpan = document.getElementById(`status-${orderId}`);
+      if (statusSpan) statusSpan.innerText = status;
+    }
+  }
+
+  // Formulaire commande - OUVRE LE MODAL DE PAIEMENT
+  document.getElementById('orderForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fullName = document.getElementById('fullName').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const size = document.getElementById('size').value;
+    const deliveryMode = document.getElementById('deliveryMode').value;
+    
+    if (!fullName || !phone || !address) {
+      showToast("Veuillez remplir tous les champs");
+      return;
+    }
+    
+    let total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    if (deliveryMode === 'yango') {
+      total += 1000;
+    }
+    
+    pendingOrderData = {
+      fullName, phone, address, size, deliveryMode,
+      items: cart.map(i => `${i.icon} ${i.name} (${i.size}) x${i.quantity}`).join(', '),
+      total: total
+    };
+    
+    // Ouvrir le modal de paiement
+    document.getElementById('paymentAmount').innerText = total;
+    document.getElementById('paymentModal').classList.add('open');
+  });
+
+  function selectPaymentMethod(method) {
+    selectedPaymentMethod = method;
+    document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+    document.getElementById(`method${method.charAt(0).toUpperCase() + method.slice(1)}`).classList.add('selected');
+    
+    const qrContainer = document.getElementById('qrContainer');
+    const orangeForm = document.getElementById('orangeForm');
+    
+    if (method === 'orange') {
+      orangeForm.style.display = 'block';
+      qrContainer.style.display = 'none';
+    } else {
+      orangeForm.style.display = 'none';
+      qrContainer.style.display = 'block';
+      generateQRCode(`wave://payment?amount=${pendingOrderData.total}&merchant=DeliceFruite&phone=770000000`);
+    }
+  }
+
+  function generateQRCode(text) {
+    const canvas = document.getElementById('qrCanvas');
+    if (!canvas) return;
+    canvas.width = 200;
+    canvas.height = 200;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 200, 200);
+    ctx.fillStyle = '#e6492d';
+    ctx.fillRect(40, 40, 120, 120);
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('Wave', 75, 105);
+    ctx.font = '12px Arial';
+    ctx.fillText('77000', 80, 130);
+  }
+
+  function processPayment() {
+    if (!selectedPaymentMethod) {
+      showToast("Veuillez choisir un moyen de paiement (Orange Money ou Wave)");
+      return;
+    }
+    
+    let paymentNumber = null;
+    if (selectedPaymentMethod === 'orange') {
+      const orangeNumber = document.getElementById('orangeNumber').value;
+      if (!orangeNumber) {
+        showToast("Veuillez entrer votre numéro Orange Money");
+        return;
+      }
+      paymentNumber = orangeNumber;
+    } else {
+      const waveNumber = document.getElementById('waveNumber')?.value;
+      if (!waveNumber) {
+        showToast("Veuillez entrer votre numéro Wave");
+        return;
+      }
+      paymentNumber = waveNumber;
+    }
+    
+    // Simulation de paiement réussi
+    showToast("✅ Paiement accepté ! Traitement en cours...");
+    
+    const newOrder = {
+      id: Date.now(),
+      date: new Date().toLocaleString(),
+      ...pendingOrderData,
+      paymentMethod: selectedPaymentMethod === 'orange' ? 'Orange Money' : 'Wave',
+      paymentNumber: paymentNumber,
+      status: 'confirmée'
+    };
+    
+    orders.unshift(newOrder);
+    saveOrders();
+    
+    // Vider le panier
+    cart = [];
+    saveCart();
+    
+    closePaymentModal();
+    document.getElementById('orderForm').reset();
+    
+    // Message de confirmation
+    const msgDiv = document.getElementById('orderMessage');
+    msgDiv.style.display = 'block';
+    msgDiv.innerHTML = `
+      <div style="background:#28a745; color:white; padding:20px; border-radius:16px;">
+        <i class="fas fa-check-circle" style="font-size: 48px;"></i>
+        <h3>✅ Paiement confirmé !</h3>
+        <p>Merci ${pendingOrderData.fullName} pour votre commande !</p>
+        <p><strong>Numéro de commande : #${newOrder.id}</strong></p>
+        <p>Total payé : ${pendingOrderData.total} FCFA</p>
+        <p>Mode de paiement : ${newOrder.paymentMethod}</p>
+        <p>Un reçu vous sera envoyé par WhatsApp.</p>
+      </div>
+    `;
+    
+    showToast(`🎉 Commande #${newOrder.id} confirmée !`);
+    sendWhatsApp(pendingOrderData.phone, pendingOrderData.fullName, newOrder.id);
+    
+    setTimeout(() => {
+      msgDiv.style.display = 'none';
+      showSection('home');
+    }, 8000);
+  }
+
+  function closePaymentModal() {
+    document.getElementById('paymentModal').classList.remove('open');
+    selectedPaymentMethod = null;
+    document.getElementById('orangeNumber').value = '';
+    if(document.getElementById('waveNumber')) document.getElementById('waveNumber').value = '';
+  }
+
+  function displayReviews() {
+    const container = document.getElementById('reviewsList');
+    if (!container) return;
+    if (reviews.length === 0) {
+      container.innerHTML = '<p>Soyez le premier à donner votre avis ! ⭐</p>';
+      return;
+    }
+    container.innerHTML = reviews.map(r => `
+      <div class="review">
+        <div class="stars">${'⭐'.repeat(r.rating)}</div>
+        <p>"${r.comment}"</p>
+        <small>- ${r.name} - ${r.date}</small>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const rating = parseInt(document.getElementById('rating').value);
+    const comment = document.getElementById('reviewText').value;
+    const name = document.getElementById('reviewerName').value || 'Anonyme';
+    if (!comment) {
+      showToast("Veuillez écrire un commentaire");
+      return;
+    }
+    reviews.unshift({ rating, comment, name, date: new Date().toLocaleString() });
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+    displayReviews();
+    this.reset();
+    showToast("Merci pour votre avis ! ⭐");
+  });
+
+  function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  function showSection(section) {
+    const sections = ['homeSection', 'productsSection', 'commanderSection', 'reviewsSection', 'contactSection', 'adminSection'];
+    sections.forEach(s => {
+      const el = document.getElementById(s);
+      if (el) el.style.display = 'none';
+    });
+    if (section === 'home') document.getElementById('homeSection').style.display = 'flex';
+    else document.getElementById(`${section}Section`).style.display = 'block';
+  }
+
+  function exportOrdersCSV() {
+    let csv = "ID,Date,Nom,Téléphone,Adresse,Total,Paiement,Statut\n";
+    orders.forEach(o => {
+      csv += `${o.id},${o.date},${o.fullName},${o.phone},${o.address},${o.total},${o.paymentMethod},${o.status}\n`;
+    });
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `commandes_${Date.now()}.csv`;
+    a.click();
+  }
+
+  function exportOrdersJSON() {
+    const dataStr = JSON.stringify(orders, null, 2);
+    const blob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `commandes_${Date.now()}.json`;
+    a.click();
+  }
+
+  function clearAllOrders() {
+    if (confirm('⚠️ Supprimer TOUTES les commandes ?')) {
+      orders = [];
+      saveOrders();
+      showToast("Toutes les commandes ont été supprimées");
+    }
+  }
+
+  function sendWhatsApp(phone, name, orderId) {
+    if (!phone) return;
+    const order = orders.find(o => o.id === orderId);
+    const msg = `Bonjour ${name}, votre commande #${orderId} chez Délice Fruité est confirmée ! 🍍 Montant: ${order?.total} FCFA (payé par ${order?.paymentMethod}). Merci !`;
+    window.open(`https://wa.me/221${phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div style="font-size: 4rem;">${p.icon}</div>
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <p><strong>Petit: 1000F | Grand: 1500F</strong></p>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button class="add-to-cart" onclick='addToCart(${JSON.stringify(p)}, "Petit")'>🍽️ Petit 1000F</button>
+          <button class="add-to-cart" onclick='addToCart(${JSON.stringify(p)}, "Grand")'>🍽️ Grand 1500F</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Initialisation
+  renderProducts();
+  displayReviews();
+  displayOrders();
+  updateCartUI();
+  
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') document.body.classList.add('dark-mode');
+  
+  const savedLang = localStorage.getItem('language');
+  if (savedLang) setLanguage(savedLang);
+  else setLanguage('fr');
+</script>
+
+<footer style="background: #2c2418; color: white; text-align: center; padding: 30px; margin-top: 40px;">
+  <p>© 2025 Délice Fruité - Liberté 6, Khar Yalla, Dakar, Sénégal</p>
+  <p>📱 <a href="https://www.instagram.com/delicefruite_221" style="color:#f5a65b;">@delicefruite_221</a> | 📞 <a href="https://wa.me/221710325628" style="color:#25D366;">+221 71 032 56 28</a> | <a href="https://wa.me/221779404444" style="color:#25D366;">+221 77 940 44 44</a></p>
+  <p>💳 Paiement sécurisé : Orange Money | Wave</p>
+  <p>🚚 Livraison via Yango disponible partout à Dakar</p>
+</footer>
+
+</body>
+</html>
